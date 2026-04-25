@@ -54,4 +54,5 @@ export interface CreateEvaluationDto {
   taste: number;
   tags: string[];
   comment?: string;
+  recaptchaToken: string;
 }

@@ -94,7 +94,16 @@ export default function Avaliar() {
     setSubmitting(true);
     setError('');
     try {
-      await createEvaluation({ neighborhoodId, odor, color, taste, tags, comment: comment || undefined });
+      const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY as string | undefined;
+      let recaptchaToken = 'no-recaptcha';
+      if (siteKey && (window as any).grecaptcha) {
+        recaptchaToken = await new Promise<string>((resolve, reject) =>
+          (window as any).grecaptcha.ready(() =>
+            (window as any).grecaptcha.execute(siteKey, { action: 'avaliar' }).then(resolve).catch(reject)
+          )
+        );
+      }
+      await createEvaluation({ neighborhoodId, odor, color, taste, tags, comment: comment || undefined, recaptchaToken });
       setSuccess(true);
       setComment('');
       setTags([]);
