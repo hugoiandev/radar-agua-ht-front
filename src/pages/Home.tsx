@@ -5,7 +5,7 @@ import type { CityIndex, Alert, Neighborhood } from '../types';
 import WaterGauge from '../components/WaterGauge';
 import AlertBanner from '../components/AlertBanner';
 import StatusBadge from '../components/StatusBadge';
-import { RefreshCw, ChevronRight, Droplets, BarChart2, Megaphone, PlusCircle } from 'lucide-react';
+import { RefreshCw, ChevronRight, Droplets, BarChart2, Megaphone, PlusCircle, Code2 } from 'lucide-react';
 
 const QUICK = [
   { to: '/avaliar', icon: PlusCircle, label: 'Avaliar água', sub: 'Envie sua avaliação', color: '#22d3ee', bg: 'rgba(34,211,238,0.08)', border: 'rgba(34,211,238,0.2)' },
@@ -92,6 +92,31 @@ export default function Home() {
             </Link>
           ))}
         </div>
+
+        {/* API pública */}
+        {import.meta.env.VITE_API_URL && (
+          <a
+            href={`${import.meta.env.VITE_API_URL}/api`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'flex', alignItems: 'center', gap: 12,
+              padding: '14px 16px', borderRadius: 14,
+              background: 'rgba(129,140,248,0.06)', border: '1px solid rgba(129,140,248,0.18)',
+              textDecoration: 'none', transition: 'opacity 0.15s',
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.75')}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
+          >
+            <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(129,140,248,0.12)', border: '1px solid rgba(129,140,248,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <Code2 size={17} style={{ color: '#818cf8' }} />
+            </div>
+            <div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: '#e2e8f0' }}>API Pública</div>
+              <div style={{ fontSize: 11, color: '#64748b', marginTop: 2 }}>Acesse os dados via REST · Documentação Swagger</div>
+            </div>
+          </a>
+        )}
 
         {/* Worst */}
         {worst.length > 0 && (
